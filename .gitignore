@@ -1,3 +1,5 @@
 Temp/
 Library/
 Logs/
+.vs/*
+obj/*
