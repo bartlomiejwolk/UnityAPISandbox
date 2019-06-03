@@ -15,21 +15,51 @@ public class VectorMethods : MonoBehaviour
     [SerializeField]
     private Transform m_CrossProductPointer;
 
+    [SerializeField]
+    private Method m_Method;
+
     void Update()
     {
-        // Vector3.Angle()
+        switch (m_Method)
         {
-            float angle = Vector3.Angle(m_ObjectA.forward, m_ObjectB.forward);
-            Debug.Log(string.Format("Angle between A and B: {0}", angle));
-        }
+            case Method.Vector3_Angle:
+                {
+                    DisableAllSceneObjects();
+                    m_ObjectA.gameObject.SetActive(true);
+                    m_ObjectB.gameObject.SetActive(true);
 
-        // Vector3.Cross()
-        {
-            Vector3 cross = Vector3.Cross(m_ObjectA.forward, m_ObjectB.forward);
-            Debug.Log(string.Format("Cross product between A and B: {0}", cross));
-            Quaternion newRot = new Quaternion();
-            newRot.SetLookRotation(cross, Vector3.up);
-            m_CrossProductPointer.rotation = newRot;
+                    float angle = Vector3.Angle(m_ObjectA.forward, m_ObjectB.forward);
+                    //Debug.Log(string.Format("Angle between A and B: {0}", angle));
+                    break;
+                }
+            case Method.Vector3_Cross:
+                {
+                    DisableAllSceneObjects();
+                    m_ObjectA.gameObject.SetActive(true);
+                    m_ObjectB.gameObject.SetActive(true);
+                    m_CrossProductPointer.gameObject.SetActive(true);
+
+                    Vector3 cross = Vector3.Cross(m_ObjectA.forward, m_ObjectB.forward);
+                    //Debug.Log(string.Format("Cross product between A and B: {0}", cross));
+                    Quaternion newRot = new Quaternion();
+                    newRot.SetLookRotation(cross, Vector3.up);
+                    m_CrossProductPointer.rotation = newRot;
+                    break;
+                }
         }
     }
+
+    private void DisableAllSceneObjects()
+    {
+        m_ObjectA.gameObject.SetActive(false);
+        m_ObjectB.gameObject.SetActive(false);
+        m_CrossProductPointer.gameObject.SetActive(false);
+    }
+}
+
+public enum Method
+{
+    Vector3_Angle,
+
+    Vector3_Cross
 }
