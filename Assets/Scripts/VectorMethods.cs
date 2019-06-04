@@ -42,6 +42,8 @@ public class VectorMethods : MonoBehaviour
     /// </summary>
     private List<object> m_OnGUIData = new List<object>();
 
+    #region UNITY MESSAGES
+
     private void Awake()
     {
         Assert.IsNotNull(m_AircraftTRS);
@@ -66,38 +68,6 @@ public class VectorMethods : MonoBehaviour
         }
 
         HandleMethodType();
-    }
-
-    private void InitLineRenderers()
-    {
-        m_AircraftLineRenderer.startWidth = m_LineRendererWidth;
-        m_AircraftLineRenderer.endWidth = m_LineRendererWidth;
-        m_RunwayLineRenderer.startWidth = m_LineRendererWidth;
-        m_RunwayLineRenderer.endWidth = m_LineRendererWidth;
-        m_HelperLineA.startWidth = m_LineRendererWidth;
-        m_HelperLineA.endWidth = m_LineRendererWidth;
-    }
-
-    private bool AllRefsSet()
-    {
-        if (m_AircraftTRS && m_RunwayTRS && m_HelperLineA && m_AircraftLineRenderer && m_RunwayLineRenderer)
-        {
-            return true;
-        }
-
-        return false;
-    }
-
-    private void UpdateAircraftLineRenderer()
-    {
-        m_AircraftLineRenderer.SetPosition(0, m_AircraftTRS.position);
-        m_AircraftLineRenderer.SetPosition(1, m_AircraftTRS.position + m_AircraftTRS.forward * m_LineRendererLenght);
-    }
-
-    private void UpdateRunwayLineRenderer()
-    {
-        m_RunwayLineRenderer.SetPosition(0, m_RunwayTRS.position);
-        m_RunwayLineRenderer.SetPosition(1, m_RunwayTRS.position + m_RunwayTRS.forward * m_LineRendererLenght);
     }
 
     private void OnGUI()
@@ -160,13 +130,7 @@ public class VectorMethods : MonoBehaviour
         GUILayout.EndVertical();
     }
 
-    private void ResetScene()
-    {
-        m_OnGUIData.Clear();
-        m_AircraftTRS.position = Vector3.zero;
-        m_AircraftTRS.rotation = Quaternion.identity;
-        DisableAllSceneObjects();
-    }
+    #endregion
 
     private void HandleMethodType()
     {
@@ -240,6 +204,34 @@ public class VectorMethods : MonoBehaviour
         }
     }
 
+    private void InitLineRenderers()
+    {
+        m_AircraftLineRenderer.startWidth = m_LineRendererWidth;
+        m_AircraftLineRenderer.endWidth = m_LineRendererWidth;
+        m_RunwayLineRenderer.startWidth = m_LineRendererWidth;
+        m_RunwayLineRenderer.endWidth = m_LineRendererWidth;
+        m_HelperLineA.startWidth = m_LineRendererWidth;
+        m_HelperLineA.endWidth = m_LineRendererWidth;
+    }
+
+    private bool AllRefsSet()
+    {
+        if (m_AircraftTRS && m_RunwayTRS && m_HelperLineA && m_AircraftLineRenderer && m_RunwayLineRenderer)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private void ResetScene()
+    {
+        m_OnGUIData.Clear();
+        m_AircraftTRS.position = Vector3.zero;
+        m_AircraftTRS.rotation = Quaternion.identity;
+        DisableAllSceneObjects();
+    }
+
     private void DisableAllSceneObjects()
     {
         m_AircraftTRS.gameObject.SetActive(false);
@@ -247,6 +239,19 @@ public class VectorMethods : MonoBehaviour
         m_HelperLineA.gameObject.SetActive(false);
         m_TargetPoint.gameObject.SetActive(false);
     }
+
+    private void UpdateAircraftLineRenderer()
+    {
+        m_AircraftLineRenderer.SetPosition(0, m_AircraftTRS.position);
+        m_AircraftLineRenderer.SetPosition(1, m_AircraftTRS.position + m_AircraftTRS.forward * m_LineRendererLenght);
+    }
+
+    private void UpdateRunwayLineRenderer()
+    {
+        m_RunwayLineRenderer.SetPosition(0, m_RunwayTRS.position);
+        m_RunwayLineRenderer.SetPosition(1, m_RunwayTRS.position + m_RunwayTRS.forward * m_LineRendererLenght);
+    }
+
 }
 
 public enum Method
