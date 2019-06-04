@@ -28,6 +28,9 @@ public class VectorMethods : MonoBehaviour
     private LineRenderer m_HelperLineA;
 
     [SerializeField]
+    private Transform m_TargetPoint;
+
+    [SerializeField]
     private float m_LineRendererLenght = 10;
 
     [SerializeField]
@@ -47,6 +50,7 @@ public class VectorMethods : MonoBehaviour
         Assert.IsNotNull(m_AircraftLineRenderer);
         Assert.IsNotNull(m_RunwayLineRenderer);
         Assert.IsNotNull(m_HelperLineA);
+        Assert.IsNotNull(m_TargetPoint);
     }
 
     private void Start()
@@ -106,19 +110,33 @@ public class VectorMethods : MonoBehaviour
             case Method.Vector3_Angle:
                 {
                     GUILayout.Label("Vector3.Angle()");
-                    GUILayout.Label(string.Format("Angle: {0}", m_OnGUIData[0]?.ToString()));
+                    GUILayout.Label(string.Format("Angle: {0}", m_OnGUIData[0]));
                     break;
                 }
             case Method.Vector3_Dot:
                 {
                     GUILayout.Label("Vector3.Dot()");
-                    GUILayout.Label(string.Format("Dot Product: {0}", m_OnGUIData[0]?.ToString()));
+                    GUILayout.Label(string.Format("Dot Product: {0}", m_OnGUIData[0]));
                     break;
                 }
             case Method.Vector3_Cross:
                 {
                     GUILayout.Label("Vector3.Cross()");
-                    GUILayout.Label(string.Format("Cross Product: {0}", m_OnGUIData[0]?.ToString()));
+                    GUILayout.Label(string.Format("Cross Product: {0}", m_OnGUIData[0]));
+                    break;
+                }
+            case Method.Quaternion_SetFromToRotation:
+                {
+                    if (m_OnGUIData.Count != 2)
+                    {
+                        return;
+                    }
+                    GUILayout.Label("Quaternion.SetFromToRotation()");
+                    GUILayout.Label("public void SetFromToRotation(Vector3 fromDirection, Vector3 toDirection);");
+                    GUILayout.Label("fromDirection: aircraft forward vector. toDirection: direction from aircraft to the target");
+                    GUILayout.Label("Aircraft rotation is multiplied by the result of this method.");
+                    GUILayout.Label(string.Format("Aircraft dir to target (G): {0}", m_OnGUIData[0]));
+                    GUILayout.Label(string.Format("Delta rotation: {0}", m_OnGUIData[1]));
                     break;
                 }
         }
@@ -133,6 +151,8 @@ public class VectorMethods : MonoBehaviour
             case Method.Vector3_Angle:
                 {
                     m_OnGUIData.Clear();
+                    m_AircraftTRS.position = Vector3.zero;
+                    m_AircraftTRS.rotation = Quaternion.identity;
 
                     // Setup scene objects.
                     DisableAllSceneObjects();
@@ -146,6 +166,8 @@ public class VectorMethods : MonoBehaviour
             case Method.Vector3_Dot:
                 {
                     m_OnGUIData.Clear();
+                    m_AircraftTRS.position = Vector3.zero;
+                    m_AircraftTRS.rotation = Quaternion.identity;
 
                     // Setup scene objects.
                     DisableAllSceneObjects();
@@ -159,6 +181,8 @@ public class VectorMethods : MonoBehaviour
             case Method.Vector3_Cross:
                 {
                     m_OnGUIData.Clear();
+                    m_AircraftTRS.position = Vector3.zero;
+                    m_AircraftTRS.rotation = Quaternion.identity;
 
                     // Setup scene objects.
                     DisableAllSceneObjects();
@@ -178,6 +202,25 @@ public class VectorMethods : MonoBehaviour
 
                     break;
                 }
+            case Method.Quaternion_SetFromToRotation:
+                {
+                    m_OnGUIData.Clear();
+                    m_AircraftTRS.position = Vector3.zero;
+                    m_AircraftTRS.rotation = Quaternion.identity;
+
+                    DisableAllSceneObjects();
+                    m_AircraftTRS.gameObject.SetActive(true);
+                    m_TargetPoint.gameObject.SetActive(true);
+
+                    Quaternion quaternion = new Quaternion();
+                    Vector3 dirToTarget = m_TargetPoint.position - m_AircraftTRS.position;
+                    m_OnGUIData.Add(dirToTarget.normalized);
+                    quaternion.SetFromToRotation(m_AircraftTRS.forward, dirToTarget);
+                    m_OnGUIData.Add(quaternion.eulerAngles);
+                    m_AircraftTRS.rotation = quaternion * m_AircraftTRS.rotation;
+
+                    break;
+                }
         }
     }
 
@@ -186,6 +229,7 @@ public class VectorMethods : MonoBehaviour
         m_AircraftTRS.gameObject.SetActive(false);
         m_RunwayTRS.gameObject.SetActive(false);
         m_HelperLineA.gameObject.SetActive(false);
+        m_TargetPoint.gameObject.SetActive(false);
     }
 }
 
@@ -197,4 +241,5 @@ public enum Method
 
     Vector3_Cross,
 
+    Quaternion_SetFromToRotation
 }
