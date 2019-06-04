@@ -113,29 +113,29 @@ public class VectorMethods : MonoBehaviour
                     GUILayout.Label(string.Format("Cross Product: {0}", m_OnGUIData[0]));
                     break;
                 }
-            case Method.QuaternionSetFromToRotation:
+            case Method.QuaternionFromToRotation:
                 {
                     if (m_OnGUIData.Count < 2)
                     {
                         return;
                     }
-                    GUILayout.Label("Quaternion.SetFromToRotation()");
-                    GUILayout.Label("public void SetFromToRotation(Vector3 fromDirection, Vector3 toDirection)");
+                    GUILayout.Label("Quaternion.FromToRotation()");
+                    GUILayout.Label("public static Quaternion FromToRotation(Vector3 fromDirection, Vector3 toDirection)");
                     GUILayout.Label("fromDirection: aircraft forward vector. toDirection: direction from aircraft to the target");
                     GUILayout.Label("Aircraft rotation is multiplied by the result of this method.");
                     GUILayout.Label(string.Format("Aircraft dir to target (G): {0}", m_OnGUIData[0]));
                     GUILayout.Label(string.Format("Quaternion: {0}", m_OnGUIData[1]));
                     break;
                 }
-            case Method.QuaternionSetLookRotation:
+            case Method.QuaternionLookRotation:
                 {
                     if (m_OnGUIData.Count < 2)
                     {
                         return;
                     }
-                    GUILayout.Label("Quaternion.SetLookRotation()");
-                    GUILayout.Label("public void SetLookRotation(Vector3 view, Vector3 up = Vector3.up)");
-                    GUILayout.Label("view: direction from aircraft to the target");
+                    GUILayout.Label("Quaternion.LookRotation()");
+                    GUILayout.Label("public static Quaternion LookRotation(Vector3 forward, Vector3 upwards = Vector3.up)");
+                    GUILayout.Label("forward: direction from aircraft to the target");
                     GUILayout.Label("Resulting quaternion is assigned to aircraft rotation");
                     GUILayout.Label(string.Format("Aircraft dir to target (G): {0}", m_OnGUIData[0]));
                     GUILayout.Label(string.Format("Quaternion: {0}", m_OnGUIData[1]));
@@ -214,7 +214,7 @@ public class VectorMethods : MonoBehaviour
 
                     break;
                 }
-            case Method.QuaternionSetFromToRotation:
+            case Method.QuaternionFromToRotation:
                 {
                     m_OnGUIData.Clear();
 
@@ -225,16 +225,15 @@ public class VectorMethods : MonoBehaviour
                     m_RunwayTRS.gameObject.SetActive(true);
                     m_TargetPoint.gameObject.SetActive(true);
 
-                    Quaternion quaternion = new Quaternion();
                     Vector3 dirToTarget = m_TargetPoint.position - m_AircraftTRS.position;
                     m_OnGUIData.Add(dirToTarget.normalized);
-                    quaternion.SetFromToRotation(m_AircraftTRS.forward, dirToTarget);
+                    Quaternion quaternion = Quaternion.FromToRotation(m_AircraftTRS.forward, dirToTarget);
                     m_OnGUIData.Add(quaternion.eulerAngles);
                     m_AircraftTRS.rotation = quaternion * m_AircraftTRS.rotation;
 
                     break;
                 }
-            case Method.QuaternionSetLookRotation:
+            case Method.QuaternionLookRotation:
                 {
                     m_OnGUIData.Clear();
 
@@ -245,10 +244,9 @@ public class VectorMethods : MonoBehaviour
                     m_RunwayTRS.gameObject.SetActive(true);
                     m_TargetPoint.gameObject.SetActive(true);
 
-                    Quaternion quaternion = new Quaternion();
                     Vector3 dirToTarget = m_TargetPoint.position - m_AircraftTRS.position;
                     m_OnGUIData.Add(dirToTarget.normalized);
-                    quaternion.SetLookRotation(dirToTarget);
+                    Quaternion quaternion = Quaternion.LookRotation(dirToTarget);
                     m_OnGUIData.Add(quaternion.eulerAngles);
                     m_AircraftTRS.rotation = quaternion;
 
@@ -344,9 +342,9 @@ public enum Method
 
     Vector3Cross,
 
-    QuaternionSetFromToRotation,
+    QuaternionFromToRotation,
 
-    QuaternionSetLookRotation,
+    QuaternionLookRotation,
 
     QuaternionToAngleAxis
 }
