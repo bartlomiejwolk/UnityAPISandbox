@@ -12,7 +12,6 @@ public class VectorMethods : MonoBehaviour
     [SerializeField]
     private Method m_Method;
 
-    [Header("Angle")]
     [SerializeField]
     private Transform m_AircraftTRS;
 
@@ -20,13 +19,13 @@ public class VectorMethods : MonoBehaviour
     private Transform m_RunwayTRS;
 
     [SerializeField]
-    private Transform m_CrossProductPointer;
-
-    [SerializeField]
     private LineRenderer m_AircraftLineRenderer;
 
     [SerializeField]
     private LineRenderer m_RunwayLineRenderer;
+
+    [SerializeField]
+    private LineRenderer m_HelperLineA;
 
     [SerializeField]
     private float m_LineRendererLenght = 10;
@@ -44,9 +43,10 @@ public class VectorMethods : MonoBehaviour
     {
         Assert.IsNotNull(m_AircraftTRS);
         Assert.IsNotNull(m_RunwayTRS);
-        Assert.IsNotNull(m_CrossProductPointer);
+        Assert.IsNotNull(m_HelperLineA);
         Assert.IsNotNull(m_AircraftLineRenderer);
         Assert.IsNotNull(m_RunwayLineRenderer);
+        Assert.IsNotNull(m_HelperLineA);
     }
 
     private void Start()
@@ -69,7 +69,7 @@ public class VectorMethods : MonoBehaviour
 
     private bool AllRefsSet()
     {
-        if (m_AircraftTRS && m_RunwayTRS && m_CrossProductPointer && m_AircraftLineRenderer && m_RunwayLineRenderer)
+        if (m_AircraftTRS && m_RunwayTRS && m_HelperLineA && m_AircraftLineRenderer && m_RunwayLineRenderer)
         {
             return true;
         }
@@ -164,13 +164,18 @@ public class VectorMethods : MonoBehaviour
                     DisableAllSceneObjects();
                     m_AircraftTRS.gameObject.SetActive(true);
                     m_RunwayTRS.gameObject.SetActive(true);
-                    m_CrossProductPointer.gameObject.SetActive(true);
+                    m_HelperLineA.gameObject.SetActive(true);
 
                     Vector3 cross = Vector3.Cross(m_AircraftTRS.forward, m_RunwayTRS.forward);
                     m_OnGUIData.Add(cross);
-                    Quaternion newRot = new Quaternion();
-                    newRot.SetLookRotation(cross, Vector3.up);
-                    m_CrossProductPointer.rotation = newRot;
+
+                    // Draw line.
+                    // TODO init start/end width in Start. Do same for other Line Renderes.
+                    m_HelperLineA.startWidth = m_LineRendererWidth;
+                    m_HelperLineA.endWidth = m_LineRendererWidth;
+                    m_HelperLineA.SetPosition(0, m_RunwayTRS.position);
+                    m_HelperLineA.SetPosition(1, m_RunwayTRS.position + cross * m_LineRendererLenght);
+
                     break;
                 }
         }
@@ -180,7 +185,7 @@ public class VectorMethods : MonoBehaviour
     {
         m_AircraftTRS.gameObject.SetActive(false);
         m_RunwayTRS.gameObject.SetActive(false);
-        m_CrossProductPointer.gameObject.SetActive(false);
+        m_HelperLineA.gameObject.SetActive(false);
     }
 }
 
