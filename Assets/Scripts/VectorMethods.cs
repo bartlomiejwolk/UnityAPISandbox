@@ -9,6 +9,9 @@ using UnityEngine.Assertions;
 [ExecuteInEditMode]
 public class VectorMethods : MonoBehaviour
 {
+    [SerializeField]
+    private Method m_Method;
+
     [Header("Angle")]
     [SerializeField]
     private Transform m_AircraftTRS;
@@ -18,15 +21,6 @@ public class VectorMethods : MonoBehaviour
 
     [SerializeField]
     private Transform m_CrossProductPointer;
-
-    [SerializeField]
-    private Method m_Method;
-
-    /// <summary>
-    /// Used to pass data from Update() to OnGUI().
-    /// OnGUI() must know the order in which the data was added to the list.
-    /// </summary>
-    private List<object> m_OnGUIData = new List<object>();
 
     [SerializeField]
     private LineRenderer m_AircraftLineRenderer;
@@ -39,6 +33,12 @@ public class VectorMethods : MonoBehaviour
 
     [SerializeField]
     private float m_LineRendererWidth = .2f;
+
+    /// <summary>
+    /// Used to pass data from Update() to OnGUI().
+    /// OnGUI() must know the order in which the data was added to the list.
+    /// </summary>
+    private List<object> m_OnGUIData = new List<object>();
 
     private void Awake()
     {
