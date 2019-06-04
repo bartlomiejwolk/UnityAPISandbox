@@ -343,7 +343,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 433602797}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.07, y: 18.9, z: 22.96}
+  m_LocalPosition: {x: 39.2, y: 9.5, z: 35.6}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 775692202}
@@ -505,7 +505,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &738727624
 Transform:
   m_ObjectHideFlags: 0
@@ -653,7 +653,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1ea6f18637f34c46be5c34eb85cb19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Method: 2
+  m_Method: 0
   m_AircraftTRS: {fileID: 4427129057575456}
   m_RunwayTRS: {fileID: 263413870}
   m_TargetPoint: {fileID: 433602798}

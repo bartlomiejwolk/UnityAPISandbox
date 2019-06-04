@@ -141,6 +141,21 @@ public class VectorMethods : MonoBehaviour
                     GUILayout.Label(string.Format("Quaternion: {0}", m_OnGUIData[1]));
                     break;
                 }
+            case Method.QuaternionRotateTowards:
+                {
+                    if (m_OnGUIData.Count < 2)
+                    {
+                        return;
+                    }
+                    GUILayout.Label("Quaternion.RotateTowards()");
+                    GUILayout.Label("public static Quaternion RotateTowards(Quaternion from, Quaternion to, float maxDegreesDelta)");
+                    GUILayout.Label("from: aircraft rotation. to: rot. to target");
+                    GUILayout.Label("Resulting quaternion is assigned to aircraft rotation");
+                    GUILayout.Label(string.Format("Aircraft dir to target (G): {0}", m_OnGUIData[0]));
+                    GUILayout.Label(string.Format("Rot. to target (from Vector3.zero): {0}", m_OnGUIData[1]));
+                    GUILayout.Label(string.Format("New aircraft rotation: {0}", m_OnGUIData[2]));
+                    break;
+                }
             case Method.QuaternionToAngleAxis:
                 {
                     if (m_OnGUIData.Count < 2)
@@ -252,6 +267,27 @@ public class VectorMethods : MonoBehaviour
 
                     break;
                 }
+            case Method.QuaternionRotateTowards:
+                {
+                    m_OnGUIData.Clear();
+
+                    UpdateAircraftLineRenderer();
+                    UpdateRunwayLineRenderer();
+
+                    m_AircraftTRS.gameObject.SetActive(true);
+                    m_RunwayTRS.gameObject.SetActive(true);
+                    m_TargetPoint.gameObject.SetActive(true);
+
+                    Vector3 dirToTarget = m_TargetPoint.position - m_AircraftTRS.position;
+                    m_OnGUIData.Add(dirToTarget.normalized);
+                    Quaternion rotationToTarget = Quaternion.LookRotation(dirToTarget);
+                    m_OnGUIData.Add(rotationToTarget.eulerAngles);
+                    Quaternion result = Quaternion.RotateTowards(m_AircraftTRS.rotation, rotationToTarget, 1);
+                    m_OnGUIData.Add(result.eulerAngles);
+                    m_AircraftTRS.rotation = result;
+
+                    break;
+                }
             case Method.QuaternionToAngleAxis:
                 {
                     m_OnGUIData.Clear();
@@ -346,5 +382,8 @@ public enum Method
 
     QuaternionLookRotation,
 
-    QuaternionToAngleAxis
+    QuaternionRotateTowards,
+
+    QuaternionToAngleAxis,
+
 }
