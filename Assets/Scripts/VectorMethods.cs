@@ -119,7 +119,7 @@ public class VectorMethods : MonoBehaviour
                         return;
                     }
                     GUILayout.Label("Quaternion.SetFromToRotation()");
-                    GUILayout.Label("public void SetFromToRotation(Vector3 fromDirection, Vector3 toDirection);");
+                    GUILayout.Label("public void SetFromToRotation(Vector3 fromDirection, Vector3 toDirection)");
                     GUILayout.Label("fromDirection: aircraft forward vector. toDirection: direction from aircraft to the target");
                     GUILayout.Label("Aircraft rotation is multiplied by the result of this method.");
                     GUILayout.Label(string.Format("Aircraft dir to target (G): {0}", m_OnGUIData[0]));
@@ -133,11 +133,24 @@ public class VectorMethods : MonoBehaviour
                         return;
                     }
                     GUILayout.Label("Quaternion.SetLookRotation()");
-                    GUILayout.Label("public void SetLookRotation(Vector3 view, Vector3 up = Vector3.up);");
+                    GUILayout.Label("public void SetLookRotation(Vector3 view, Vector3 up = Vector3.up)");
                     GUILayout.Label("view: direction from aircraft to the target");
                     GUILayout.Label("Resulting quaternion is assigned to aircraft rotation");
                     GUILayout.Label(string.Format("Aircraft dir to target (G): {0}", m_OnGUIData[0]));
                     GUILayout.Label(string.Format("Quaternion: {0}", m_OnGUIData[1]));
+                    break;
+                }
+            case Method.QuaternionToAngleAxis:
+                {
+                    if (m_OnGUIData.Count < 2)
+                    {
+                        return;
+                    }
+                    GUILayout.Label("Quaternion.ToAngleAxis()");
+                    GUILayout.Label("public void ToAngleAxis(out float angle, out Vector3 axis)");
+                    GUILayout.Label("Converts aircraft rotation (quaternion) to angle and axis");
+                    GUILayout.Label(string.Format("Angle: {0}", m_OnGUIData[0]));
+                    GUILayout.Label(string.Format("Axis: {0}", m_OnGUIData[1]));
                     break;
                 }
         }
@@ -242,6 +255,30 @@ public class VectorMethods : MonoBehaviour
 
                     break;
                 }
+            case Method.QuaternionToAngleAxis:
+                {
+                    ResetScene();
+
+                    UpdateAircraftLineRenderer();
+                    UpdateRunwayLineRenderer();
+
+                    m_AircraftTRS.gameObject.SetActive(true);
+                    m_RunwayTRS.gameObject.SetActive(true);
+                    m_HelperLineA.gameObject.SetActive(true);
+
+                    float angle = 0;
+                    Vector3 axis = Vector3.zero;
+                    m_AircraftTRS.rotation.ToAngleAxis(out angle, out axis);
+
+                    // Draw line along axis.
+                    m_HelperLineA.SetPosition(0, m_RunwayTRS.position);
+                    m_HelperLineA.SetPosition(1, m_RunwayTRS.position + axis * m_LineRendererLenght);
+
+                    m_OnGUIData.Add(angle);
+                    m_OnGUIData.Add(axis);
+
+                    break;
+                }
         }
     }
 
@@ -310,5 +347,7 @@ public enum Method
 
     QuaternionSetFromToRotation,
 
-    QuaternionSetLookRotation
+    QuaternionSetLookRotation,
+
+    QuaternionToAngleAxis
 }
