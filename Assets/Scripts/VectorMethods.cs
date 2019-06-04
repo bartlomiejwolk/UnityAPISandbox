@@ -6,6 +6,7 @@ using UnityEngine.Assertions;
 
 #pragma warning disable 0649
 
+// TODO get refs. from code by tag. Remove references from the inspector
 [ExecuteInEditMode]
 public class VectorMethods : MonoBehaviour
 {
