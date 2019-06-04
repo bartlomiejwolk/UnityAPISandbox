@@ -19,6 +19,9 @@ public class VectorMethods : MonoBehaviour
     private Transform m_RunwayTRS;
 
     [SerializeField]
+    private Transform m_TargetPoint;
+
+    [SerializeField]
     private LineRenderer m_AircraftLineRenderer;
 
     [SerializeField]
@@ -26,9 +29,6 @@ public class VectorMethods : MonoBehaviour
 
     [SerializeField]
     private LineRenderer m_HelperLineA;
-
-    [SerializeField]
-    private Transform m_TargetPoint;
 
     [SerializeField]
     private float m_LineRendererLenght = 10;
@@ -55,9 +55,7 @@ public class VectorMethods : MonoBehaviour
 
     private void Start()
     {
-        // Init Line Renderers.
-        m_AircraftLineRenderer.positionCount = 2;
-        m_RunwayLineRenderer.positionCount = 2;
+        InitLineRenderers();
     }
 
     void Update()
@@ -68,7 +66,16 @@ public class VectorMethods : MonoBehaviour
         }
 
         HandleMethodType();
-        UpdateLineRenderers();
+    }
+
+    private void InitLineRenderers()
+    {
+        m_AircraftLineRenderer.startWidth = m_LineRendererWidth;
+        m_AircraftLineRenderer.endWidth = m_LineRendererWidth;
+        m_RunwayLineRenderer.startWidth = m_LineRendererWidth;
+        m_RunwayLineRenderer.endWidth = m_LineRendererWidth;
+        m_HelperLineA.startWidth = m_LineRendererWidth;
+        m_HelperLineA.endWidth = m_LineRendererWidth;
     }
 
     private bool AllRefsSet()
@@ -81,17 +88,14 @@ public class VectorMethods : MonoBehaviour
         return false;
     }
 
-    private void UpdateLineRenderers()
+    private void UpdateAircraftLineRenderer()
     {
-        // Aircraft
-        m_AircraftLineRenderer.startWidth = m_LineRendererWidth;
-        m_AircraftLineRenderer.endWidth = m_LineRendererWidth;
         m_AircraftLineRenderer.SetPosition(0, m_AircraftTRS.position);
         m_AircraftLineRenderer.SetPosition(1, m_AircraftTRS.position + m_AircraftTRS.forward * m_LineRendererLenght);
+    }
 
-        // Runway
-        m_RunwayLineRenderer.startWidth = m_LineRendererWidth;
-        m_RunwayLineRenderer.endWidth = m_LineRendererWidth;
+    private void UpdateRunwayLineRenderer()
+    {
         m_RunwayLineRenderer.SetPosition(0, m_RunwayTRS.position);
         m_RunwayLineRenderer.SetPosition(1, m_RunwayTRS.position + m_RunwayTRS.forward * m_LineRendererLenght);
     }
@@ -107,27 +111,39 @@ public class VectorMethods : MonoBehaviour
 
         switch (m_Method)
         {
-            case Method.Vector3_Angle:
+            case Method.Vector3Angle:
                 {
+                    if (m_OnGUIData.Count < 1)
+                    {
+                        return;
+                    }
                     GUILayout.Label("Vector3.Angle()");
                     GUILayout.Label(string.Format("Angle: {0}", m_OnGUIData[0]));
                     break;
                 }
-            case Method.Vector3_Dot:
+            case Method.Vector3Dot:
                 {
+                    if (m_OnGUIData.Count < 1)
+                    {
+                        return;
+                    }
                     GUILayout.Label("Vector3.Dot()");
                     GUILayout.Label(string.Format("Dot Product: {0}", m_OnGUIData[0]));
                     break;
                 }
-            case Method.Vector3_Cross:
+            case Method.Vector3Cross:
                 {
+                    if (m_OnGUIData.Count < 1)
+                    {
+                        return;
+                    }
                     GUILayout.Label("Vector3.Cross()");
                     GUILayout.Label(string.Format("Cross Product: {0}", m_OnGUIData[0]));
                     break;
                 }
-            case Method.Quaternion_SetFromToRotation:
+            case Method.QuaternionSetFromToRotation:
                 {
-                    if (m_OnGUIData.Count != 2)
+                    if (m_OnGUIData.Count < 2)
                     {
                         return;
                     }
@@ -144,18 +160,25 @@ public class VectorMethods : MonoBehaviour
         GUILayout.EndVertical();
     }
 
+    private void ResetScene()
+    {
+        m_OnGUIData.Clear();
+        m_AircraftTRS.position = Vector3.zero;
+        m_AircraftTRS.rotation = Quaternion.identity;
+        DisableAllSceneObjects();
+    }
+
     private void HandleMethodType()
     {
         switch (m_Method)
         {
-            case Method.Vector3_Angle:
+            case Method.Vector3Angle:
                 {
-                    m_OnGUIData.Clear();
-                    m_AircraftTRS.position = Vector3.zero;
-                    m_AircraftTRS.rotation = Quaternion.identity;
+                    UpdateAircraftLineRenderer();
+                    UpdateRunwayLineRenderer();
 
+                    ResetScene();
                     // Setup scene objects.
-                    DisableAllSceneObjects();
                     m_AircraftTRS.gameObject.SetActive(true);
                     m_RunwayTRS.gameObject.SetActive(true);
 
@@ -163,14 +186,12 @@ public class VectorMethods : MonoBehaviour
                     m_OnGUIData.Add(angle);
                     break;
                 }
-            case Method.Vector3_Dot:
+            case Method.Vector3Dot:
                 {
-                    m_OnGUIData.Clear();
-                    m_AircraftTRS.position = Vector3.zero;
-                    m_AircraftTRS.rotation = Quaternion.identity;
+                    UpdateAircraftLineRenderer();
+                    UpdateRunwayLineRenderer();
 
-                    // Setup scene objects.
-                    DisableAllSceneObjects();
+                    ResetScene();
                     m_AircraftTRS.gameObject.SetActive(true);
                     m_RunwayTRS.gameObject.SetActive(true);
 
@@ -178,14 +199,12 @@ public class VectorMethods : MonoBehaviour
                     m_OnGUIData.Add(dot);
                     break;
                 }
-            case Method.Vector3_Cross:
+            case Method.Vector3Cross:
                 {
-                    m_OnGUIData.Clear();
-                    m_AircraftTRS.position = Vector3.zero;
-                    m_AircraftTRS.rotation = Quaternion.identity;
+                    UpdateAircraftLineRenderer();
+                    UpdateRunwayLineRenderer();
 
-                    // Setup scene objects.
-                    DisableAllSceneObjects();
+                    ResetScene();
                     m_AircraftTRS.gameObject.SetActive(true);
                     m_RunwayTRS.gameObject.SetActive(true);
                     m_HelperLineA.gameObject.SetActive(true);
@@ -194,22 +213,19 @@ public class VectorMethods : MonoBehaviour
                     m_OnGUIData.Add(cross);
 
                     // Draw line.
-                    // TODO init start/end width in Start. Do same for other Line Renderes.
-                    m_HelperLineA.startWidth = m_LineRendererWidth;
-                    m_HelperLineA.endWidth = m_LineRendererWidth;
                     m_HelperLineA.SetPosition(0, m_RunwayTRS.position);
                     m_HelperLineA.SetPosition(1, m_RunwayTRS.position + cross * m_LineRendererLenght);
 
                     break;
                 }
-            case Method.Quaternion_SetFromToRotation:
+            case Method.QuaternionSetFromToRotation:
                 {
-                    m_OnGUIData.Clear();
-                    m_AircraftTRS.position = Vector3.zero;
-                    m_AircraftTRS.rotation = Quaternion.identity;
+                    UpdateAircraftLineRenderer();
+                    UpdateRunwayLineRenderer();
 
-                    DisableAllSceneObjects();
+                    ResetScene();
                     m_AircraftTRS.gameObject.SetActive(true);
+                    m_RunwayTRS.gameObject.SetActive(true);
                     m_TargetPoint.gameObject.SetActive(true);
 
                     Quaternion quaternion = new Quaternion();
@@ -235,11 +251,11 @@ public class VectorMethods : MonoBehaviour
 
 public enum Method
 {
-    Vector3_Angle,
+    Vector3Angle,
 
-    Vector3_Dot,
+    Vector3Dot,
 
-    Vector3_Cross,
+    Vector3Cross,
 
-    Quaternion_SetFromToRotation
+    QuaternionSetFromToRotation
 }
