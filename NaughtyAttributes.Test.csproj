@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{37088D85-C8EC-82D5-1C3D-EF56CE422823}</ProjectGuid>
+    <ProjectGuid>{18520465-E78C-0274-CFE5-0C07459DFBE2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>NaughtyAttributes.Test</AssemblyName>
@@ -309,19 +309,19 @@
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.Advertisements">
-      <HintPath>C:/Users/bartl/Documents/Unity Projects/MathSandbox/Library/PackageCache/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>
+      <HintPath>C:/Users/bartl/Documents/Unity Projects/UnityAPISandbox/Library/PackageCache/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
-      <HintPath>C:/Users/bartl/Documents/Unity Projects/MathSandbox/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
+      <HintPath>C:/Users/bartl/Documents/Unity Projects/UnityAPISandbox/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>C:/Users/bartl/Documents/Unity Projects/MathSandbox/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
+      <HintPath>C:/Users/bartl/Documents/Unity Projects/UnityAPISandbox/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
-      <HintPath>C:/Users/bartl/Documents/Unity Projects/MathSandbox/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+      <HintPath>C:/Users/bartl/Documents/Unity Projects/UnityAPISandbox/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.Purchasing">
-      <HintPath>C:/Users/bartl/Documents/Unity Projects/MathSandbox/Library/PackageCache/com.unity.purchasing@2.0.3/Editor/UnityEditor.Purchasing.dll</HintPath>
+      <HintPath>C:/Users/bartl/Documents/Unity Projects/UnityAPISandbox/Library/PackageCache/com.unity.purchasing@2.0.3/Editor/UnityEditor.Purchasing.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.0f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
@@ -671,7 +671,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="NaughtyAttributes.Core.csproj">
-      <Project>{7DCE1F82-450F-38B5-A954-BFEF063E936A}</Project>
+      <Project>{944DE980-DE15-3663-402B-CBAD609619A1}</Project>
       <Name>NaughtyAttributes.Core</Name>
     </ProjectReference>
   </ItemGroup>

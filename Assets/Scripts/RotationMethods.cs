@@ -8,7 +8,7 @@ using UnityEngine.Assertions;
 
 // TODO get refs. from code by tag. Remove references from the inspector
 [ExecuteInEditMode]
-public class VectorMethods : MonoBehaviour
+public class RotationMethods : MonoBehaviour
 {
     [NaughtyAttributes.OnValueChanged("ResetScene")]
     [SerializeField]
