@@ -18,35 +18,68 @@ public class VectorMethods : MonoBehaviour
     [SerializeField]
     private Method m_Method;
 
+    /// <summary>
+    /// Used to pass data from Update() to OnGUI().
+    /// OnGUI() must know the order in which the data was added to the list.
+    /// </summary>
+    private List<object> m_OnGUIData = new List<object>();
+
     void Update()
     {
         switch (m_Method)
         {
             case Method.Vector3_Angle:
                 {
+                    m_OnGUIData.Clear();
+
                     DisableAllSceneObjects();
                     m_ObjectA.gameObject.SetActive(true);
                     m_ObjectB.gameObject.SetActive(true);
 
                     float angle = Vector3.Angle(m_ObjectA.forward, m_ObjectB.forward);
-                    //Debug.Log(string.Format("Angle between A and B: {0}", angle));
+                    m_OnGUIData.Add(angle);
                     break;
                 }
             case Method.Vector3_Cross:
                 {
+                    m_OnGUIData.Clear();
+
                     DisableAllSceneObjects();
                     m_ObjectA.gameObject.SetActive(true);
                     m_ObjectB.gameObject.SetActive(true);
                     m_CrossProductPointer.gameObject.SetActive(true);
 
                     Vector3 cross = Vector3.Cross(m_ObjectA.forward, m_ObjectB.forward);
-                    //Debug.Log(string.Format("Cross product between A and B: {0}", cross));
+                    m_OnGUIData.Add(cross);
                     Quaternion newRot = new Quaternion();
                     newRot.SetLookRotation(cross, Vector3.up);
                     m_CrossProductPointer.rotation = newRot;
                     break;
                 }
         }
+    }
+
+    private void OnGUI()
+    {
+        GUILayout.BeginVertical();
+
+        switch (m_Method)
+        {
+            case Method.Vector3_Angle:
+                {
+                    GUILayout.Label("Vector3.Angle()");
+                    GUILayout.Label(string.Format("Angle: {0}", m_OnGUIData[0]));
+                    break;
+                }
+            case Method.Vector3_Cross:
+                {
+                    GUILayout.Label("Vector3.Cross()");
+                    GUILayout.Label(string.Format("Cross Product: {0}", m_OnGUIData[0]));
+                    break;
+                }
+        }
+
+        GUILayout.EndVertical();
     }
 
     private void DisableAllSceneObjects()
