@@ -123,7 +123,21 @@ public class VectorMethods : MonoBehaviour
                     GUILayout.Label("fromDirection: aircraft forward vector. toDirection: direction from aircraft to the target");
                     GUILayout.Label("Aircraft rotation is multiplied by the result of this method.");
                     GUILayout.Label(string.Format("Aircraft dir to target (G): {0}", m_OnGUIData[0]));
-                    GUILayout.Label(string.Format("Delta rotation: {0}", m_OnGUIData[1]));
+                    GUILayout.Label(string.Format("Quaternion: {0}", m_OnGUIData[1]));
+                    break;
+                }
+            case Method.QuaternionSetLookRotation:
+                {
+                    if (m_OnGUIData.Count < 2)
+                    {
+                        return;
+                    }
+                    GUILayout.Label("Quaternion.SetLookRotation()");
+                    GUILayout.Label("public void SetLookRotation(Vector3 view, Vector3 up = Vector3.up);");
+                    GUILayout.Label("view: direction from aircraft to the target");
+                    GUILayout.Label("Resulting quaternion is assigned to aircraft rotation");
+                    GUILayout.Label(string.Format("Aircraft dir to target (G): {0}", m_OnGUIData[0]));
+                    GUILayout.Label(string.Format("Quaternion: {0}", m_OnGUIData[1]));
                     break;
                 }
         }
@@ -207,6 +221,27 @@ public class VectorMethods : MonoBehaviour
 
                     break;
                 }
+            case Method.QuaternionSetLookRotation:
+                {
+                    ResetScene();
+                    ResetAircraft();
+
+                    UpdateAircraftLineRenderer();
+                    UpdateRunwayLineRenderer();
+
+                    m_AircraftTRS.gameObject.SetActive(true);
+                    m_RunwayTRS.gameObject.SetActive(true);
+                    m_TargetPoint.gameObject.SetActive(true);
+
+                    Quaternion quaternion = new Quaternion();
+                    Vector3 dirToTarget = m_TargetPoint.position - m_AircraftTRS.position;
+                    m_OnGUIData.Add(dirToTarget.normalized);
+                    quaternion.SetLookRotation(dirToTarget);
+                    m_OnGUIData.Add(quaternion.eulerAngles);
+                    m_AircraftTRS.rotation = quaternion;
+
+                    break;
+                }
         }
     }
 
@@ -230,6 +265,7 @@ public class VectorMethods : MonoBehaviour
         return false;
     }
 
+    // TODO use NaughtyAttributes OnValueChanged to call these methods
     private void ResetScene()
     {
         m_OnGUIData.Clear();
@@ -272,5 +308,7 @@ public enum Method
 
     Vector3Cross,
 
-    QuaternionSetFromToRotation
+    QuaternionSetFromToRotation,
+
+    QuaternionSetLookRotation
 }
