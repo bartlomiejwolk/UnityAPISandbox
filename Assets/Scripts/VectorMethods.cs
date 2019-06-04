@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+#pragma warning disable 0649
+
 [ExecuteInEditMode]
 public class VectorMethods : MonoBehaviour
 {
@@ -32,6 +34,7 @@ public class VectorMethods : MonoBehaviour
                 {
                     m_OnGUIData.Clear();
 
+                    // Setup scene objects.
                     DisableAllSceneObjects();
                     m_ObjectA.gameObject.SetActive(true);
                     m_ObjectB.gameObject.SetActive(true);
@@ -40,10 +43,24 @@ public class VectorMethods : MonoBehaviour
                     m_OnGUIData.Add(angle);
                     break;
                 }
+            case Method.Vector3_Dot:
+                {
+                    m_OnGUIData.Clear();
+
+                    // Setup scene objects.
+                    DisableAllSceneObjects();
+                    m_ObjectA.gameObject.SetActive(true);
+                    m_ObjectB.gameObject.SetActive(true);
+
+                    float dot = Vector3.Dot(m_ObjectA.forward, m_ObjectB.forward);
+                    m_OnGUIData.Add(dot);
+                    break;
+                }
             case Method.Vector3_Cross:
                 {
                     m_OnGUIData.Clear();
 
+                    // Setup scene objects.
                     DisableAllSceneObjects();
                     m_ObjectA.gameObject.SetActive(true);
                     m_ObjectB.gameObject.SetActive(true);
@@ -71,6 +88,12 @@ public class VectorMethods : MonoBehaviour
                     GUILayout.Label(string.Format("Angle: {0}", m_OnGUIData[0]));
                     break;
                 }
+            case Method.Vector3_Dot:
+                {
+                    GUILayout.Label("Vector3.Dot()");
+                    GUILayout.Label(string.Format("Dot Product: {0}", m_OnGUIData[0]));
+                    break;
+                }
             case Method.Vector3_Cross:
                 {
                     GUILayout.Label("Vector3.Cross()");
@@ -94,5 +117,8 @@ public enum Method
 {
     Vector3_Angle,
 
-    Vector3_Cross
+    Vector3_Dot,
+
+    Vector3_Cross,
+
 }
