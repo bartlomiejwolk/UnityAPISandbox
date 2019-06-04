@@ -10,6 +10,7 @@ using UnityEngine.Assertions;
 [ExecuteInEditMode]
 public class VectorMethods : MonoBehaviour
 {
+    [NaughtyAttributes.OnValueChanged("ResetScene")]
     [SerializeField]
     private Method m_Method;
 
@@ -166,7 +167,7 @@ public class VectorMethods : MonoBehaviour
         {
             case Method.Vector3Angle:
                 {
-                    ResetScene();
+                    m_OnGUIData.Clear();
 
                     UpdateAircraftLineRenderer();
                     UpdateRunwayLineRenderer();
@@ -181,7 +182,7 @@ public class VectorMethods : MonoBehaviour
                 }
             case Method.Vector3Dot:
                 {
-                    ResetScene();
+                    m_OnGUIData.Clear();
 
                     UpdateAircraftLineRenderer();
                     UpdateRunwayLineRenderer();
@@ -195,7 +196,7 @@ public class VectorMethods : MonoBehaviour
                 }
             case Method.Vector3Cross:
                 {
-                    ResetScene();
+                    m_OnGUIData.Clear();
 
                     UpdateAircraftLineRenderer();
                     UpdateRunwayLineRenderer();
@@ -215,8 +216,7 @@ public class VectorMethods : MonoBehaviour
                 }
             case Method.QuaternionSetFromToRotation:
                 {
-                    ResetScene();
-                    ResetAircraft();
+                    m_OnGUIData.Clear();
 
                     UpdateAircraftLineRenderer();
                     UpdateRunwayLineRenderer();
@@ -236,8 +236,7 @@ public class VectorMethods : MonoBehaviour
                 }
             case Method.QuaternionSetLookRotation:
                 {
-                    ResetScene();
-                    ResetAircraft();
+                    m_OnGUIData.Clear();
 
                     UpdateAircraftLineRenderer();
                     UpdateRunwayLineRenderer();
@@ -257,7 +256,7 @@ public class VectorMethods : MonoBehaviour
                 }
             case Method.QuaternionToAngleAxis:
                 {
-                    ResetScene();
+                    m_OnGUIData.Clear();
 
                     UpdateAircraftLineRenderer();
                     UpdateRunwayLineRenderer();
@@ -302,19 +301,19 @@ public class VectorMethods : MonoBehaviour
         return false;
     }
 
-    // TODO use NaughtyAttributes OnValueChanged to call these methods
     private void ResetScene()
     {
-        m_OnGUIData.Clear();
         DisableAllSceneObjects();
-    }
 
-    private void ResetAircraft()
-    {
+        // Reset this transform in case it was modified accidentally.
+        transform.position = Vector3.zero;
+        transform.rotation = Quaternion.identity;
+
+        // Reset aircraft.
         m_AircraftTRS.position = Vector3.zero;
         m_AircraftTRS.rotation = Quaternion.identity;
     }
-
+    
     private void DisableAllSceneObjects()
     {
         m_AircraftTRS.gameObject.SetActive(false);

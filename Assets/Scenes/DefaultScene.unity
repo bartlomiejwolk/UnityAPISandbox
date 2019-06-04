@@ -559,7 +559,7 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 20, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -568,7 +568,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.21
+        value: 0.2
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -577,7 +577,7 @@ LineRenderer:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
-        value: 0.21
+        value: 0.2
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -653,7 +653,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1ea6f18637f34c46be5c34eb85cb19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Method: 5
+  m_Method: 2
   m_AircraftTRS: {fileID: 4427129057575456}
   m_RunwayTRS: {fileID: 263413870}
   m_TargetPoint: {fileID: 433602798}
@@ -703,6 +703,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Aircraft
       objectReference: {fileID: 0}
+    - target: {fileID: 1940402267846110, guid: b10447bb983d60343ab47d2f8ca01eef, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4427129057575456, guid: b10447bb983d60343ab47d2f8ca01eef, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -717,15 +721,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4427129057575456, guid: b10447bb983d60343ab47d2f8ca01eef, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4427129057575456, guid: b10447bb983d60343ab47d2f8ca01eef, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4427129057575456, guid: b10447bb983d60343ab47d2f8ca01eef, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4427129057575456, guid: b10447bb983d60343ab47d2f8ca01eef, type: 3}
       propertyPath: m_LocalRotation.w
