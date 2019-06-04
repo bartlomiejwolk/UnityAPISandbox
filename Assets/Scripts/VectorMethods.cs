@@ -138,10 +138,11 @@ public class VectorMethods : MonoBehaviour
         {
             case Method.Vector3Angle:
                 {
+                    ResetScene();
+
                     UpdateAircraftLineRenderer();
                     UpdateRunwayLineRenderer();
 
-                    ResetScene();
                     // Setup scene objects.
                     m_AircraftTRS.gameObject.SetActive(true);
                     m_RunwayTRS.gameObject.SetActive(true);
@@ -152,10 +153,11 @@ public class VectorMethods : MonoBehaviour
                 }
             case Method.Vector3Dot:
                 {
+                    ResetScene();
+
                     UpdateAircraftLineRenderer();
                     UpdateRunwayLineRenderer();
 
-                    ResetScene();
                     m_AircraftTRS.gameObject.SetActive(true);
                     m_RunwayTRS.gameObject.SetActive(true);
 
@@ -165,10 +167,11 @@ public class VectorMethods : MonoBehaviour
                 }
             case Method.Vector3Cross:
                 {
+                    ResetScene();
+
                     UpdateAircraftLineRenderer();
                     UpdateRunwayLineRenderer();
 
-                    ResetScene();
                     m_AircraftTRS.gameObject.SetActive(true);
                     m_RunwayTRS.gameObject.SetActive(true);
                     m_HelperLineA.gameObject.SetActive(true);
@@ -184,10 +187,12 @@ public class VectorMethods : MonoBehaviour
                 }
             case Method.QuaternionSetFromToRotation:
                 {
+                    ResetScene();
+                    ResetAircraft();
+
                     UpdateAircraftLineRenderer();
                     UpdateRunwayLineRenderer();
 
-                    ResetScene();
                     m_AircraftTRS.gameObject.SetActive(true);
                     m_RunwayTRS.gameObject.SetActive(true);
                     m_TargetPoint.gameObject.SetActive(true);
@@ -227,9 +232,13 @@ public class VectorMethods : MonoBehaviour
     private void ResetScene()
     {
         m_OnGUIData.Clear();
+        DisableAllSceneObjects();
+    }
+
+    private void ResetAircraft()
+    {
         m_AircraftTRS.position = Vector3.zero;
         m_AircraftTRS.rotation = Quaternion.identity;
-        DisableAllSceneObjects();
     }
 
     private void DisableAllSceneObjects()
