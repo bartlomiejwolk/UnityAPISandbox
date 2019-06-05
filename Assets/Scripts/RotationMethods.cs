@@ -6,7 +6,6 @@ using UnityEngine.Assertions;
 
 #pragma warning disable 0649
 
-// TODO get refs. from code by tag. Remove references from the inspector
 [ExecuteInEditMode]
 public class RotationMethods : MonoBehaviour
 {
@@ -14,6 +13,7 @@ public class RotationMethods : MonoBehaviour
     [SerializeField]
     private Method m_Method;
 
+    [Header("References")]
     [SerializeField]
     private Transform m_AircraftTRS;
 
@@ -26,6 +26,7 @@ public class RotationMethods : MonoBehaviour
     [SerializeField]
     private LineRenderer m_HelperLine;
 
+    [Header("Settings")]
     [SerializeField]
     private float m_LineRendererLenght = 10;
 
