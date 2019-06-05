@@ -11,7 +11,7 @@ public class RotationMethods : MonoBehaviour
 {
     [NaughtyAttributes.OnValueChanged("ResetScene")]
     [SerializeField]
-    private Method m_Method;
+    private APIMethod m_Method;
 
     [Header("References")]
     [SerializeField]
@@ -72,7 +72,7 @@ public class RotationMethods : MonoBehaviour
             return;
         }
 
-        HandleMethodType();
+        ExecuteSelectedAPI();
     }
 
     private void OnGUI()
@@ -86,7 +86,7 @@ public class RotationMethods : MonoBehaviour
 
         switch (m_Method)
         {
-            case Method.Vector3Angle:
+            case APIMethod.Vector3Angle:
                 {
                     if (m_OnGUIData.Count < 1)
                     {
@@ -96,7 +96,7 @@ public class RotationMethods : MonoBehaviour
                     GUILayout.Label(string.Format("Angle: {0}", m_OnGUIData[0]));
                     break;
                 }
-            case Method.Vector3Dot:
+            case APIMethod.Vector3Dot:
                 {
                     if (m_OnGUIData.Count < 1)
                     {
@@ -106,7 +106,7 @@ public class RotationMethods : MonoBehaviour
                     GUILayout.Label(string.Format("Dot Product: {0}", m_OnGUIData[0]));
                     break;
                 }
-            case Method.Vector3Cross:
+            case APIMethod.Vector3Cross:
                 {
                     if (m_OnGUIData.Count < 1)
                     {
@@ -116,7 +116,7 @@ public class RotationMethods : MonoBehaviour
                     GUILayout.Label(string.Format("Cross Product: {0}", m_OnGUIData[0]));
                     break;
                 }
-            case Method.Vector3RotateTowards:
+            case APIMethod.Vector3RotateTowards:
                 {
                     if (m_OnGUIData.Count < 2)
                     {
@@ -130,7 +130,7 @@ public class RotationMethods : MonoBehaviour
                     GUILayout.Label(string.Format("New dir. (G): {0}", m_OnGUIData[1]));
                     break;
                 }
-            case Method.QuaternionFromToRotation:
+            case APIMethod.QuaternionFromToRotation:
                 {
                     if (m_OnGUIData.Count < 2)
                     {
@@ -144,7 +144,7 @@ public class RotationMethods : MonoBehaviour
                     GUILayout.Label(string.Format("Quaternion: {0}", m_OnGUIData[1]));
                     break;
                 }
-            case Method.QuaternionLookRotation:
+            case APIMethod.QuaternionLookRotation:
                 {
                     if (m_OnGUIData.Count < 2)
                     {
@@ -158,7 +158,7 @@ public class RotationMethods : MonoBehaviour
                     GUILayout.Label(string.Format("Quaternion: {0}", m_OnGUIData[1]));
                     break;
                 }
-            case Method.QuaternionRotateTowards:
+            case APIMethod.QuaternionRotateTowards:
                 {
                     if (m_OnGUIData.Count < 2)
                     {
@@ -173,7 +173,7 @@ public class RotationMethods : MonoBehaviour
                     GUILayout.Label(string.Format("New aircraft rotation: {0}", m_OnGUIData[2]));
                     break;
                 }
-            case Method.QuaternionToAngleAxis:
+            case APIMethod.QuaternionToAngleAxis:
                 {
                     if (m_OnGUIData.Count < 2)
                     {
@@ -193,14 +193,14 @@ public class RotationMethods : MonoBehaviour
 
     #endregion
 
-    private void HandleMethodType()
+    private void ExecuteSelectedAPI()
     {
         UpdateAircraftLineRenderer();
         UpdateRunwayLineRenderer();
 
         switch (m_Method)
         {
-            case Method.Vector3Angle:
+            case APIMethod.Vector3Angle:
                 {
                     m_OnGUIData.Clear();
 
@@ -212,7 +212,7 @@ public class RotationMethods : MonoBehaviour
                     m_OnGUIData.Add(angle);
                     break;
                 }
-            case Method.Vector3Dot:
+            case APIMethod.Vector3Dot:
                 {
                     m_OnGUIData.Clear();
 
@@ -223,7 +223,7 @@ public class RotationMethods : MonoBehaviour
                     m_OnGUIData.Add(dot);
                     break;
                 }
-            case Method.Vector3Cross:
+            case APIMethod.Vector3Cross:
                 {
                     m_OnGUIData.Clear();
 
@@ -240,7 +240,7 @@ public class RotationMethods : MonoBehaviour
 
                     break;
                 }
-            case Method.Vector3RotateTowards:
+            case APIMethod.Vector3RotateTowards:
                 {
                     m_OnGUIData.Clear();
 
@@ -257,7 +257,7 @@ public class RotationMethods : MonoBehaviour
 
                     break;
                 }
-            case Method.QuaternionFromToRotation:
+            case APIMethod.QuaternionFromToRotation:
                 {
                     m_OnGUIData.Clear();
 
@@ -273,7 +273,7 @@ public class RotationMethods : MonoBehaviour
 
                     break;
                 }
-            case Method.QuaternionLookRotation:
+            case APIMethod.QuaternionLookRotation:
                 {
                     m_OnGUIData.Clear();
 
@@ -289,7 +289,7 @@ public class RotationMethods : MonoBehaviour
 
                     break;
                 }
-            case Method.QuaternionRotateTowards:
+            case APIMethod.QuaternionRotateTowards:
                 {
                     m_OnGUIData.Clear();
 
@@ -307,7 +307,7 @@ public class RotationMethods : MonoBehaviour
 
                     break;
                 }
-            case Method.QuaternionToAngleAxis:
+            case APIMethod.QuaternionToAngleAxis:
                 {
                     m_OnGUIData.Clear();
 
@@ -386,7 +386,7 @@ public class RotationMethods : MonoBehaviour
 
 }
 
-public enum Method
+public enum APIMethod
 {
     Vector3Angle,
 
