@@ -62,7 +62,7 @@ public class RotationMethods : MonoBehaviour
 
     private void Start()
     {
-        InitLineRenderers();
+        SetupLineRenderers();
     }
 
     void Update()
@@ -331,7 +331,7 @@ public class RotationMethods : MonoBehaviour
         }
     }
 
-    private void InitLineRenderers()
+    private void SetupLineRenderers()
     {
         m_AircraftLineRenderer.startWidth = m_LineRendererWidth;
         m_AircraftLineRenderer.endWidth = m_LineRendererWidth;
