@@ -195,8 +195,7 @@ public class RotationMethods : MonoBehaviour
 
     private void ExecuteSelectedAPI()
     {
-        UpdateAircraftLineRenderer();
-        UpdateRunwayLineRenderer();
+        UpdateLineRenderers();
 
         switch (m_Method)
         {
@@ -372,18 +371,14 @@ public class RotationMethods : MonoBehaviour
         m_TargetPointTRS.gameObject.SetActive(false);
     }
 
-    private void UpdateAircraftLineRenderer()
+    private void UpdateLineRenderers()
     {
         m_AircraftLineRenderer.SetPosition(0, m_AircraftTRS.position);
         m_AircraftLineRenderer.SetPosition(1, m_AircraftTRS.position + m_AircraftTRS.forward * m_LineRendererLenght);
-    }
 
-    private void UpdateRunwayLineRenderer()
-    {
         m_RunwayLineRenderer.SetPosition(0, m_RunwayTRS.position);
         m_RunwayLineRenderer.SetPosition(1, m_RunwayTRS.position + m_RunwayTRS.forward * m_LineRendererLenght);
     }
-
 }
 
 public enum APIMethod
