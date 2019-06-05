@@ -24,13 +24,7 @@ public class RotationMethods : MonoBehaviour
     private Transform m_TargetPointTRS;
 
     [SerializeField]
-    private LineRenderer m_AircraftLineRenderer;
-
-    [SerializeField]
-    private LineRenderer m_RunwayLineRenderer;
-
-    [SerializeField]
-    private LineRenderer m_HelperLineA;
+    private LineRenderer m_HelperLine;
 
     [SerializeField]
     private float m_LineRendererLenght = 10;
@@ -44,17 +38,25 @@ public class RotationMethods : MonoBehaviour
     /// </summary>
     private List<object> m_OnGUIData = new List<object>();
 
+    private LineRenderer m_AircraftLineRenderer;
+
+    private LineRenderer m_RunwayLineRenderer;
+
     #region UNITY MESSAGES
 
     private void Awake()
     {
         Assert.IsNotNull(m_AircraftTRS);
         Assert.IsNotNull(m_RunwayTRS);
-        Assert.IsNotNull(m_HelperLineA);
+        Assert.IsNotNull(m_HelperLine);
+        Assert.IsNotNull(m_HelperLine);
+        Assert.IsNotNull(m_TargetPointTRS);
+
+        m_AircraftLineRenderer = m_AircraftTRS.GetComponent<LineRenderer>();
+        m_RunwayLineRenderer = m_RunwayTRS.GetComponent<LineRenderer>();
+
         Assert.IsNotNull(m_AircraftLineRenderer);
         Assert.IsNotNull(m_RunwayLineRenderer);
-        Assert.IsNotNull(m_HelperLineA);
-        Assert.IsNotNull(m_TargetPointTRS);
     }
 
     private void Start()
@@ -226,14 +228,14 @@ public class RotationMethods : MonoBehaviour
 
                     m_AircraftTRS.gameObject.SetActive(true);
                     m_RunwayTRS.gameObject.SetActive(true);
-                    m_HelperLineA.gameObject.SetActive(true);
+                    m_HelperLine.gameObject.SetActive(true);
 
                     Vector3 cross = Vector3.Cross(m_AircraftTRS.forward, m_RunwayTRS.forward);
                     m_OnGUIData.Add(cross);
 
                     // Draw line.
-                    m_HelperLineA.SetPosition(0, m_RunwayTRS.position);
-                    m_HelperLineA.SetPosition(1, m_RunwayTRS.position + cross * m_LineRendererLenght);
+                    m_HelperLine.SetPosition(0, m_RunwayTRS.position);
+                    m_HelperLine.SetPosition(1, m_RunwayTRS.position + cross * m_LineRendererLenght);
 
                     break;
                 }
@@ -310,15 +312,15 @@ public class RotationMethods : MonoBehaviour
 
                     m_AircraftTRS.gameObject.SetActive(true);
                     m_RunwayTRS.gameObject.SetActive(true);
-                    m_HelperLineA.gameObject.SetActive(true);
+                    m_HelperLine.gameObject.SetActive(true);
 
                     float angle = 0;
                     Vector3 axis = Vector3.zero;
                     m_AircraftTRS.rotation.ToAngleAxis(out angle, out axis);
 
                     // Draw line along axis.
-                    m_HelperLineA.SetPosition(0, m_RunwayTRS.position);
-                    m_HelperLineA.SetPosition(1, m_RunwayTRS.position + axis * m_LineRendererLenght);
+                    m_HelperLine.SetPosition(0, m_RunwayTRS.position);
+                    m_HelperLine.SetPosition(1, m_RunwayTRS.position + axis * m_LineRendererLenght);
 
                     m_OnGUIData.Add(angle);
                     m_OnGUIData.Add(axis);
@@ -334,13 +336,13 @@ public class RotationMethods : MonoBehaviour
         m_AircraftLineRenderer.endWidth = m_LineRendererWidth;
         m_RunwayLineRenderer.startWidth = m_LineRendererWidth;
         m_RunwayLineRenderer.endWidth = m_LineRendererWidth;
-        m_HelperLineA.startWidth = m_LineRendererWidth;
-        m_HelperLineA.endWidth = m_LineRendererWidth;
+        m_HelperLine.startWidth = m_LineRendererWidth;
+        m_HelperLine.endWidth = m_LineRendererWidth;
     }
 
     private bool AllRefsSet()
     {
-        if (m_AircraftTRS && m_RunwayTRS && m_HelperLineA && m_AircraftLineRenderer && m_RunwayLineRenderer)
+        if (m_AircraftTRS && m_RunwayTRS && m_HelperLine && m_AircraftLineRenderer && m_RunwayLineRenderer)
         {
             return true;
         }
@@ -365,7 +367,7 @@ public class RotationMethods : MonoBehaviour
     {
         m_AircraftTRS.gameObject.SetActive(false);
         m_RunwayTRS.gameObject.SetActive(false);
-        m_HelperLineA.gameObject.SetActive(false);
+        m_HelperLine.gameObject.SetActive(false);
         m_TargetPointTRS.gameObject.SetActive(false);
     }
 
