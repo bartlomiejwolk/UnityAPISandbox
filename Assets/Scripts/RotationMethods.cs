@@ -209,6 +209,7 @@ public class RotationMethods : MonoBehaviour
 
                     float angle = Vector3.Angle(m_AircraftTRS.forward, m_RunwayTRS.forward);
                     m_OnGUIData.Add(angle);
+
                     break;
                 }
             case APIMethod.Vector3Dot:
@@ -220,6 +221,7 @@ public class RotationMethods : MonoBehaviour
 
                     float dot = Vector3.Dot(m_AircraftTRS.forward, m_RunwayTRS.forward);
                     m_OnGUIData.Add(dot);
+
                     break;
                 }
             case APIMethod.Vector3Cross:
@@ -361,6 +363,10 @@ public class RotationMethods : MonoBehaviour
         // Reset aircraft.
         m_AircraftTRS.position = Vector3.zero;
         m_AircraftTRS.rotation = Quaternion.identity;
+
+        // Reset runway.
+        m_RunwayTRS.position = Vector3.zero;
+        m_RunwayTRS.rotation = Quaternion.identity;
     }
     
     private void DisableAllSceneObjects()
